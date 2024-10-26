@@ -31,3 +31,16 @@ variable "aws_profile" {
   type        = string
   default     = ""
 }
+
+# Define a variable to specify default tags for resources created by Terraform.
+# These tags will automatically be applied to all managed resources, ensuring consistency
+# and aiding in cost tracking and project organization.
+variable "tags" {
+  description = "Default tags applied to all resources"
+  type = map(string)
+  default = {
+    CreatedBy = "Terraform"
+    Owner      = "ajripa@uoc.edu"
+    Project    = "TFG"
+  }
+}

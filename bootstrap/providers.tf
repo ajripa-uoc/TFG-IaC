@@ -18,4 +18,9 @@ terraform {
 # such as the AWS region to use, which is provided via a variable.
 provider "aws" {
   region = var.aws_region
+  profile = var.aws_profile
+
+  default_tags {
+        tags = var.tags
+  }
 }
