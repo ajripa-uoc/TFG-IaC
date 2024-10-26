@@ -11,13 +11,14 @@ This repository contains the bootstrap code for the Infrastructure as Code (IaC)
 
 ## Introduction
 
-Provides foundational setup for deploying infrastructure using IaC principles. It includes scripts and configurations to automate the provisioning of resources.
+Provides a foundational setup for managing Terraform state and locking resources. It includes scripts and configurations to automate the provisioning of resources specifically for storing the Terraform state in an S3 bucket and ensuring state lock management using a DynamoDB table.
 
 ## Prerequisites
 
 - [Terraform](https://www.terraform.io/downloads.html) installed
-- [AWS CLI](https://aws.amazon.com/cli/) configured
-- Basic knowledge of cloud infrastructure and IaC concepts
+- An **AWS account** with appropriate permissions.
+- An **AWS profile** configured locally for Terraform to access AWS resources.
+- Basic knowledge of cloud infrastructure and Infrastructure as Code (IaC) concepts.
 
 ## Installation
 
