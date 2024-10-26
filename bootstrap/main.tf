@@ -25,7 +25,7 @@ module "dynamodb" {
   attributes = [
     {
       name = "LockID"
-      type = "N"
+      type = "S"
     }
   ]
 }
