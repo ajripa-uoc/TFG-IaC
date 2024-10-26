@@ -8,7 +8,6 @@
 module "s3" {
   source = "terraform-aws-modules/s3-bucket/aws"
   bucket = var.s3_bucket_name
-  acl    = "private"
 
   versioning = {
     enabled = true
@@ -21,4 +20,12 @@ module "s3" {
 module "dynamodb" {
   source   = "terraform-aws-modules/dynamodb-table/aws"
   name = var.dynamodb_table_name
+  hash_key = "LockID"
+
+  attributes = [
+    {
+      name = "LockID"
+      type = "N"
+    }
+  ]
 }
