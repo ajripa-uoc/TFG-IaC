@@ -34,15 +34,15 @@ Provides foundational setup for deploying infrastructure using IaC principles. I
 
 ## Usage
 
-1. Create a `terraform.tfvars` file to store your configuration variables:
+1. Create a `terraform.tfvars` file to store your configuration variables and modify is as needed:
     ```hcl
     s3_bucket_name      = "tfg-ajripa-terraform-state"
     dynamodb_table_name = "tfg-ajripa-terraform-state-lock"
     aws_region          = "eu-west-1"
     tags = {
-        CreatedBy  = "CustomDeploymentTool"
-        Owner      = "FinanceDept"
-        Project    = "NewProject"
+        CreatedBy  = "Terraform"
+        Owner      = "ajripa@ie.edu"
+        Project    = "TFG"
     }
     ```
 
