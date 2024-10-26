@@ -3,17 +3,22 @@
 # https://registry.terraform.io/modules/terraform-aws-modules
 
 # S3 bucket to store the Terraform state
-# https://registry.terraform.io/modules/terraform-aws-modules/s3/aws/latest
+# https://registry.terraform.io/modules/terraform-aws-modules/s3-bucket/aws/latest
 
 module "s3" {
-  source = "./modules/aws/s3"
-  s3_bucket_name = var.s3_bucket_name
+  source = "terraform-aws-modules/s3-bucket/aws"
+  bucket = var.s3_bucket_name
+  acl    = "private"
+
+  versioning = {
+    enabled = true
+  }
 }
 
 # DynamoDB table for Terraform state locking
-# https://registry.terraform.io/modules/terraform-aws-modules/dynamodb/aws/latest
+# https://registry.terraform.io/modules/terraform-aws-modules/dynamodb-table/aws/latest
 
 module "dynamodb" {
-  source = "./modules/aws/dynamodb"
-  dynamodb_table_name = var.dynamodb_table_name
+  source   = "terraform-aws-modules/dynamodb-table/aws"
+  name = var.dynamodb_table_name
 }
