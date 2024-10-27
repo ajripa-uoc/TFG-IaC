@@ -17,6 +17,14 @@ variable "aws_profile" {
   default     = ""
 }
 
+# Specifies the ARN of the AWS admin user for access in the AWS Console.
+# By default, this is set to the root user of the account.
+variable "aws_admin_arn" {
+  description = "ARN of the AWS admin user"
+  type        = string
+  default     = ""
+}
+
 # Define a variable to specify default tags for resources created by Terraform.
 # These tags will automatically be applied to all managed resources, ensuring consistency
 # and aiding in cost tracking and project organization.
@@ -64,13 +72,6 @@ variable "eks_instance_type" {
   description = "Instance type for the EKS manged nodes"
   type        = list(string)
   default     = ["m6i.large", "t3.large", "t3a.large"]
-}
-
-# Specifies the ARN of the AWS admin user for access to the EKS cluster in the AWS Console.
-variable "aws_admin_arn" {
-  description = "ARN of the AWS admin user"
-  type        = string
-  default     = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
 }
 
 
