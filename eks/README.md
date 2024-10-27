@@ -35,15 +35,18 @@ This project automates the deployment of an EKS cluster with Terraform, includin
     terraform init
     ```
 
-3. **Preview the changes (optional but recommended):**
+3. **Use a variables file (optional):**
+   You can create a `terraform.tfvars` file to specify your configuration variables, allowing easy customization of settings without modifying the main codebase.
+
+4. **Preview the changes (optional but recommended):**
    Before applying, you can use `terraform plan` to review the resources that will be created or modified:
     ```sh
-    terraform plan
+    terraform plan -var-file="terraform.tfvars"
     ```
 
-4. **Apply the Terraform configuration:**
+5. **Apply the Terraform configuration:**
     ```sh
-    terraform apply
+    terraform apply -var-file="terraform.tfvars"
     ```
    Confirm with `yes` when prompted to proceed with the deployment.
 

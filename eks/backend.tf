@@ -3,10 +3,10 @@
 # Adjust the "key" value for each project to separate and organize state files.
 
 terraform {
-    backend "s3" {
-        bucket          = "tfg-ajripa-sandbox-terraform-state"
-        key             = "eks/terraform.tfstate"
-        region          = "eu-west-1"
-        dynamodb_table  = "tfg-ajripa-sandbox-terraform-state-lock"
-    }
+  backend "s3" {
+    bucket         = "tfg-ajripa-sandbox-terraform-state"
+    key            = "eks/terraform.tfstate"
+    region         = "eu-west-1"
+    dynamodb_table = "tfg-ajripa-sandbox-terraform-state-lock"
+  }
 }

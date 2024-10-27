@@ -3,7 +3,7 @@ data "aws_availability_zones" "available" {}
 
 # Defines local variable `azs` to use the first 3 availability zones for subnet distribution
 locals {
-    azs = slice(data.aws_availability_zones.available.names, 0, 3)
+  azs = slice(data.aws_availability_zones.available.names, 0, 3)
 }
 
 # VPC module configuration for creating a virtual private cloud
@@ -17,13 +17,13 @@ module "vpc" {
   cidr = var.vpc_cidr
 
   azs             = local.azs
-  private_subnets = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 4, k)] # Private subnet CIDR blocks
+  private_subnets = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 4, k)]      # Private subnet CIDR blocks
   public_subnets  = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 8, k + 48)] # Public subnet CIDR blocks
   intra_subnets   = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 8, k + 52)] # Intra subnet CIDR blocks
 
 
-  enable_nat_gateway = true     # Enables a NAT gateway for internet access in private subnets
-  single_nat_gateway = true     # Deploys a single NAT gateway to reduce costs
+  enable_nat_gateway = true # Enables a NAT gateway for internet access in private subnets
+  single_nat_gateway = true # Deploys a single NAT gateway to reduce costs
 
   public_subnet_tags = {
     "kubernetes.io/role/elb" = 1 # Tag to identify public subnets for external load balancers used by k8s

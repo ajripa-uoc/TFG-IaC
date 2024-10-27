@@ -4,36 +4,36 @@
 
 # Define Terraform and required providers
 terraform {
-    required_version = ">=1.9.0"
-    required_providers {
-        aws = {
-          source  = "hashicorp/aws"
-          version = "~> 5.0"
-        }
-        helm = {
-          source  = "hashicorp/helm"
-          version = ">= 2.9"
-        }
-        kubernetes = {
-          source  = "hashicorp/kubernetes"
-          version = ">= 2.20"
-        }
-        kubectl = {
-          source  = "alekc/kubectl"
-          version = ">= 2.0.2"
-        }
+  required_version = ">=1.9.0"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
     }
+    helm = {
+      source  = "hashicorp/helm"
+      version = ">= 2.9"
+    }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.20"
+    }
+    kubectl = {
+      source  = "alekc/kubectl"
+      version = ">= 2.0.2"
+    }
+  }
 }
 
 # AWS Provider configuration module
 # Sets up the AWS provider with the necessary configuration parameters,
 # such as the AWS region to use, which is provided via a variable.
 provider "aws" {
-  region = var.aws_region
+  region  = var.aws_region
   profile = var.aws_profile
 
   default_tags {
-        tags = var.tags
+    tags = var.tags
   }
 }
 

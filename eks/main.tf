@@ -8,6 +8,8 @@ module "eks" {
   cluster_name    = var.eks_cluster_name
   cluster_version = var.eks_cluster_version
 
+  enable_cluster_creator_admin_permissions = true
+
   # EKS Addons for essential networking and DNS functionality
   cluster_addons = {
     coredns                = {} # CoreDNS for DNS management within the cluster
@@ -23,23 +25,23 @@ module "eks" {
   # Define managed node groups for the EKS cluster based on variables
   eks_managed_node_groups = merge(
     var.eks_enable_on_demand ? {
-        on-demand = {
+      on-demand = {
         instance_types = var.eks_instance_type
-        min_size = 2
-        max_size = 5
-        desired_size = 2
-        }
+        min_size       = 2
+        max_size       = 5
+        desired_size   = 2
+      }
     } : {},
 
     var.eks_enable_spot ? {
-        spot = {
+      spot = {
         instance_types = var.eks_instance_type
-        min_size = 2
-        max_size = 5
-        desired_size = 2
-        capacity_type = "SPOT" # Capacity type set to Spot for cost savings
-        }
-  } : {}
+        min_size       = 2
+        max_size       = 5
+        desired_size   = 2
+        capacity_type  = "SPOT" # Capacity type set to Spot for cost savings
+      }
+    } : {}
   )
 
   # Fargate profiles

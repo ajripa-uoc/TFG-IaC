@@ -30,11 +30,11 @@ variable "aws_admin_arn" {
 # and aiding in cost tracking and project organization.
 variable "tags" {
   description = "Default tags applied to all resources"
-  type = map(string)
+  type        = map(string)
   default = {
     CreatedBy = "Terraform"
-    Owner      = "ajripa@uoc.edu"
-    Project    = "TFG"
+    Owner     = "ajripa@uoc.edu"
+    Project   = "TFG"
   }
 }
 
