@@ -1,5 +1,5 @@
 # .github/workflows/terraform.yml
-name: Terraform Infrastructure Deployment
+name: Terraform EKS Deployment
 
 on:
   push:
