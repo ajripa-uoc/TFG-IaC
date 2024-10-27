@@ -100,3 +100,13 @@ variable "eks_enable_fargate" {
 }
 
 
+# Specifies the GitHub provider configuration for authenticating with GitHub using a GitHub App.
+variable "github" {
+  description = "GitHub App credentials"
+  type = object({
+    clientid    = string
+    clientsecret = string
+  })
+}
+
+

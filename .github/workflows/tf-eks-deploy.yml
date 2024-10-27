@@ -52,3 +52,9 @@ jobs:
             terraform fmt
             terraform init
             terraform apply -var="aws_admin_arn=${{ secrets.AWS_ADMIN_ARN }}" --auto-approve=true
+        - name: Get ArgoCD Password
+          if: success()
+          uses: actions/upload-artifact@v2
+          with:
+            name: argocd-password
+            path: ./helpers/argocd-password.txt

@@ -8,7 +8,8 @@ module "eks" {
   cluster_name    = var.eks_cluster_name
   cluster_version = var.eks_cluster_version
 
-  enable_cluster_creator_admin_permissions = true
+  cluster_endpoint_public_access  = true # Enable public access to the EKS cluster endpoint
+  enable_cluster_creator_admin_permissions = true # Enable IAM permissions for the cluster creator
 
   # EKS Addons for essential networking and DNS functionality
   cluster_addons = {
