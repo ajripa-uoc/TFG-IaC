@@ -2,8 +2,6 @@ name: Terraform EKS Deploy
 
 on:
   push:
-    branches:
-      - main
     paths:
       - 'eks/**'
   # Allows you to run this workflow manually from the Actions tab
