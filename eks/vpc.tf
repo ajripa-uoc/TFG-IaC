@@ -7,6 +7,8 @@ locals {
 }
 
 # VPC module configuration for creating a virtual private cloud
+# https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
+
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 5.0"
@@ -17,6 +19,8 @@ module "vpc" {
   azs             = local.azs
   private_subnets = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 4, k)] # Private subnet CIDR blocks
   public_subnets  = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 8, k + 48)] # Public subnet CIDR blocks
+  intra_subnets   = [for k, v in local.azs : cidrsubnet(var.vpc_cidr, 8, k + 52)] # Intra subnet CIDR blocks
+
 
   enable_nat_gateway = true     # Enables a NAT gateway for internet access in private subnets
   single_nat_gateway = true     # Deploys a single NAT gateway to reduce costs

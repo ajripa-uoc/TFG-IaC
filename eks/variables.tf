@@ -45,5 +45,32 @@ variable "vpc_name" {
   default     = "tfg-vpc"
 }
 
+# Specifies the name assigned to the EKS cluster for identification and management.
+variable "eks_cluster_name" {
+  description = "Name of the EKS cluster"
+  type        = string
+  default     = "tfg-eks-cluster"
+}
+
+# Defines the Kubernetes version for the EKS cluster.
+variable "eks_cluster_version" {
+  description = "Version of the EKS cluster"
+  type        = string
+  default     = "1.31"
+}
+
+# Specifies the list of instance types used for the EKS managed node groups.
+variable "eks_instance_type" {
+  description = "Instance type for the EKS manged nodes"
+  type        = list(string)
+  default     = ["m6i.large", "t3.large", "t3a.large"]
+}
+
+# Specifies the ARN of the AWS admin user for access to the EKS cluster in the AWS Console.
+variable "aws_admin_arn" {
+  description = "ARN of the AWS admin user"
+  type        = string
+  default     = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+}
 
 
