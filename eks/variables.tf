@@ -74,4 +74,29 @@ variable "eks_instance_type" {
   default     = ["m6i.large", "t3.large", "t3a.large"]
 }
 
+# Specifies whether to enable on-demand instances for the managed node groups.
+# By default, this is set to false.
+variable "eks_enable_on_demand" {
+  description = "Enable On-Demand managed node group"
+  type        = bool
+  default     = false
+}
+
+# Specifies whether to enable Spot instances for the managed node groups.
+# By default, this is set to true
+variable "eks_enable_spot" {
+  description = "Enable Spot managed node group"
+  type        = bool
+  default     = true
+}
+
+# Specifies whether to enable Fargate profile for the EKS cluster.
+# By default, this is set to true, but it can be disabled if not needed.
+# Only kube-system and default namespaces are included in the Fargate profile.
+variable "eks_enable_fargate" {
+  description = "Enable Fargate profile"
+  type        = bool
+  default     = true
+}
+
 

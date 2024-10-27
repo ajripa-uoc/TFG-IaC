@@ -20,17 +20,44 @@ module "eks" {
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  # Define managed node groups for the EKS cluster
-  eks_managed_node_groups = {
-    on-demand = {
-      name_prefix = "eks-node-"
-      instance_types = var.eks_instance_type
-      min_size = 2
-      max_size = 5
-      desired_size = 2
-      #capacity_type = "SPOT" # Capacity type set to Spot for cost savings
+  # Define managed node groups for the EKS cluster based on variables
+  eks_managed_node_groups = merge(
+    var.eks_enable_on_demand ? {
+        on-demand = {
+        instance_types = var.eks_instance_type
+        min_size = 2
+        max_size = 5
+        desired_size = 2
+        }
+    } : {},
+
+    var.eks_enable_spot ? {
+        spot = {
+        instance_types = var.eks_instance_type
+        min_size = 2
+        max_size = 5
+        desired_size = 2
+        capacity_type = "SPOT" # Capacity type set to Spot for cost savings
+        }
+  } : {}
+  )
+
+  # Fargate profiles
+  fargate_profiles = var.eks_enable_fargate ? {
+    kube-system-profile = {
+      name = "kube-system"
+      selectors = [
+        {
+          namespace = "kube-system"
+        },
+        {
+          namespace = "default"
+        }
+      ]
+      subnets = module.vpc.private_subnets
     }
-  }
+  } : {}
+
 
   # Defines access entries for assigning IAM roles and policies to Kubernetes groups.
   # This allows access to the EKS cluster and its resources in AWS Console.
