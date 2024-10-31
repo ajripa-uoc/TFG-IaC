@@ -28,7 +28,9 @@ jobs:
             cd eks
             terraform fmt
             terraform init
-            terraform plan -var="aws_admin_arn=${{ secrets.AWS_ADMIN_ARN }}"
+            terraform plan -var="aws_admin_arn=${{ secrets.AWS_ADMIN_ARN }}" \
+              -var="github_app_clientid=${{ secrets.GITHUBAPP_CLIENTID }}" \
+              -var="github_app_secret=${{ secrets.GITHUBAPP_SECRET }}"
     apply:
       name: Terraform apply
       needs: plan
@@ -51,10 +53,7 @@ jobs:
             cd eks
             terraform fmt
             terraform init
-            terraform apply -var="aws_admin_arn=${{ secrets.AWS_ADMIN_ARN }}" --auto-approve=true
-        - name: Get ArgoCD Password
-          if: success()
-          uses: actions/upload-artifact@v2
-          with:
-            name: argocd-password
-            path: ./helpers/argocd-password.txt
+            terraform apply -var="aws_admin_arn=${{ secrets.AWS_ADMIN_ARN }}" \
+              -var="github_app_clientid=${{ secrets.GITHUBAPP_CLIENTID }}" \
+              -var="github_app_secret=${{ secrets.GITHUBAPP_SECRET }}" \
+              --auto-approve=true

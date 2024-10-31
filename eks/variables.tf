@@ -99,14 +99,31 @@ variable "eks_enable_fargate" {
   default     = true
 }
 
-
 # Specifies the GitHub provider configuration for authenticating with GitHub using a GitHub App.
-variable "github" {
-  description = "GitHub App credentials"
-  type = object({
-    clientid    = string
-    clientsecret = string
-  })
+variable "github_app_clientid" {
+  description = "GitHub App client ID"
+  type = string
 }
 
+variable "github_app_secret" {
+  description = "GitHub App secret"
+  type = string
+}
+
+# Specifies the domain name that will be used to access the ArgoCD application.
+# This domain provides a dedicated URL for interacting with ArgoCD and managing applications.
+variable "argocd_domain_name" {
+  description = "Domain name for the ArgoCD application"
+  type        = string
+  default     = "argocd.ajripa.click"
+}
+
+# Specifies the Route 53 Zone ID for the DNS zone in which records will be managed.
+# This ID uniquely identifies the hosted zone in AWS Route 53 where domain records
+# (such as A, CNAME, and TXT records) will be created and updated by the external-dns controller.
+variable "route53_zone_id" {
+  description = "Route53 Zone ID"
+  type        = string
+  default     = "Z05771062CFVMZEORD9FE"
+}
 
