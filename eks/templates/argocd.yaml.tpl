@@ -1,5 +1,5 @@
 global:
-  domain: ${domain}
+  domain: ${domain_name}
 configs:
   cm:
     dex.config: |
