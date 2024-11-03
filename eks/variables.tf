@@ -1,4 +1,9 @@
 # This file defines the necessary variables for the resources used in this project.
+variable "domain_name" {
+  description = "Domain name for the project"
+  type        = string
+  default     = "ajripa.click"
+}
 
 # AWS region where the infrastructure resources (e.g., S3 bucket, DynamoDB table) will be created.
 # By default, this is set to the EU (Ireland) region, but it can be customized.
@@ -57,7 +62,7 @@ variable "vpc_name" {
 variable "eks_cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = "tfg-eks-cluster"
+  default     = "tfg-eks"
 }
 
 # Defines the Kubernetes version for the EKS cluster.
@@ -108,14 +113,6 @@ variable "github_app_clientid" {
 variable "github_app_secret" {
   description = "GitHub App secret"
   type = string
-}
-
-# Specifies the domain name that will be used to access the ArgoCD application.
-# This domain provides a dedicated URL for interacting with ArgoCD and managing applications.
-variable "argocd_domain_name" {
-  description = "Domain name for the ArgoCD application"
-  type        = string
-  default     = "argocd.ajripa.click"
 }
 
 # Specifies the Route 53 Zone ID for the DNS zone in which records will be managed.

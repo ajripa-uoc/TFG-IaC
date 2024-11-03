@@ -13,7 +13,9 @@
         "s3:*",
         "dynamodb:*",
         "logs:*",
-        "kms:*"
+        "kms:*",
+        "acm:*",
+        "route53:*"
       ],
       "Resource": "*"
     }

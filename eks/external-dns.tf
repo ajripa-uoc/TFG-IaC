@@ -36,6 +36,8 @@ resource "helm_release" "external_dns" {
   values  = [templatefile("templates/external-dns.yaml.tpl", {
     provider        = "aws",
     aws_zone_type   = "public",
+    domain_name     = var.domain_name,
     txt_owner_id    = var.route53_zone_id
+    iam_role_arn    = module.external_dns_role.iam_role_arn
   })]
 }

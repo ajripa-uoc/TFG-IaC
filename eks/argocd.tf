@@ -7,7 +7,10 @@
 
 # Deploy the ArgoCD Helm chart with the specified values
 resource "helm_release" "argocd" {
-  depends_on = [module.eks]
+  depends_on = [
+    helm_release.aws_alb_controller,
+    helm_release.external_dns
+  ]
   name       = "argocd"
   chart      = "argo-cd"
   repository = "https://argoproj.github.io/argo-helm"
@@ -15,10 +18,19 @@ resource "helm_release" "argocd" {
   timeout    = "1500"
   create_namespace = true
   namespace  = "argocd"
+
   values  = [templatefile("templates/argocd.yaml.tpl", {
-    clientid      = var.github_app_clientid,
-    clientsecret  = var.github_app_secret,
-    domain_name   = var.argocd_domain_name
+    client_id      = var.github_app_clientid,
+    client_secret  = var.github_app_secret,
+    domain_name   = "argocd.${var.domain_name}"
   })]
+}
+
+# Create a Kubernetes service resource for the ArgoCD server
+data "kubernetes_service" "argocd_server" {
+  metadata {
+    name      = "argocd-server"
+    namespace = helm_release.argocd.namespace
+  }
 }
 

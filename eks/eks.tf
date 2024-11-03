@@ -2,12 +2,15 @@
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
 
 module "eks" {
+  depends_on = [ module.vpc ]
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
 
   cluster_name    = var.eks_cluster_name
   cluster_version = var.eks_cluster_version
 
+  create_cluster_security_group = false # Disable the creation of a security group for the EKS cluster to avoid conflicts with fargate
+  create_node_security_group    = false # Disable the creation of a security group for the EKS nodes to avoid conflicts with fargate
   cluster_endpoint_public_access  = true # Enable public access to the EKS cluster endpoint
   enable_cluster_creator_admin_permissions = true # Enable IAM permissions for the cluster creator
 
@@ -24,10 +27,13 @@ module "eks" {
   subnet_ids = module.vpc.private_subnets
 
   # Define managed node groups for the EKS cluster based on variables
+  eks_managed_node_group_defaults = {
+    instance_types = var.eks_instance_type
+  }
+
   eks_managed_node_groups = merge(
     var.eks_enable_on_demand ? {
       on-demand = {
-        instance_types = var.eks_instance_type
         min_size       = 2
         max_size       = 5
         desired_size   = 2
@@ -36,7 +42,6 @@ module "eks" {
 
     var.eks_enable_spot ? {
       spot = {
-        instance_types = var.eks_instance_type
         min_size       = 2
         max_size       = 5
         desired_size   = 2
@@ -47,18 +52,21 @@ module "eks" {
 
   # Fargate profiles
   fargate_profiles = var.eks_enable_fargate ? {
-    kube-system-profile = {
-      name = "kube-system"
+    default-profile = {
+      name = "fargate-profile"
       selectors = [
         {
-          namespace = "kube-system"
+          namespace = "kube-system" # Pods in the kube-system namespace will be scheduled on Fargate
         },
         {
-          namespace = "default"
+          namespace = "default" # Pods in the default namespace will be scheduled on Fargate
+        },
+        {
+          namespace = "fargate*" # Pods in namespaces starting with "fargate" will be scheduled on Fargate
         }
-      ]
+        ]
       subnets = module.vpc.private_subnets
-    }
+      }
   } : {}
 
 
