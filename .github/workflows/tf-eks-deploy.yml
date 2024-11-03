@@ -34,7 +34,6 @@ jobs:
               -var="github_app_installation_id=${{ secrets.GITHUBAPP_INSTALLATION_ID }}" \
               -var="github_app_id=${{ secrets.GITHUBAPP_ID }}" \
               -var="github_app_private_key=${{ secrets.GITHUBAPP_PRIVATE_KEY }}"
-
     apply:
       name: Terraform apply
       needs: plan
