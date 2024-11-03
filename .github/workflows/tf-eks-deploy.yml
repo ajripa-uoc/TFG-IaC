@@ -27,7 +27,7 @@ jobs:
           run: |
             cd eks
             terraform fmt
-            terraform init
+            terraform init --upgrade
             terraform plan -var="aws_admin_arn=${{ secrets.AWS_ADMIN_ARN }}" \
               -var="github_app_clientid=${{ secrets.GITHUBAPP_CLIENTID }}" \
               -var="github_app_secret=${{ secrets.GITHUBAPP_SECRET }}" \
