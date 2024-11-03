@@ -24,11 +24,11 @@ configs:
           id: github
           name: GitHub
           config:
-            clientID: ${client_id}
-            clientSecret: ${client_secret}
-    rbac:
-      policy.csv: |
-       g, org:admin, role:admin
-    admin.enabled: false # Disable admin user. We are using GitHub OAuth.
-repositories:
-  - url: https://github.com/ajripa-uoc/TFG-GitOps
+            clientID: ${github_app_client_id}
+            clientSecret: ${github_app_client_secret}
+    admin.enabled: false # Disable admin user. We are login with GitHub.
+  rbac:
+    scopes: '[group, email]'
+    policy.csv: |
+      g, ${argocd_admin_user}, role:admin
+

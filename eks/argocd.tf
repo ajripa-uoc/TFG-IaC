@@ -20,17 +20,33 @@ resource "helm_release" "argocd" {
   namespace  = "argocd"
 
   values  = [templatefile("templates/argocd.yaml.tpl", {
-    client_id      = var.github_app_clientid,
-    client_secret  = var.github_app_secret,
-    domain_name   = "argocd.${var.domain_name}"
+    argocd_admin_user           = var.argocd_admin_user,
+    github_app_id               = var.github_app_id,
+    github_app_client_id        = var.github_app_client_id,
+    github_app_client_secret    = var.github_app_secret,
+    github_app_installation_id  = var.github_app_installation_id,
+    github_app_url              = var.github_app_url,
+    github_app_private_key      = var.github_app_private_key,
+    domain_name                 = "argocd.${var.domain_name}"
   })]
 }
 
-# Create a Kubernetes service resource for the ArgoCD server
-data "kubernetes_service" "argocd_server" {
+# Create a Kubernetes secret to store the GitHub App credentials
+resource "kubernetes_secret" "github_app_creds" {
+  depends_on = [ helm_release.argocd ]
   metadata {
-    name      = "argocd-server"
-    namespace = helm_release.argocd.namespace
+    name      = "github-app-creds"
+    namespace = "argocd"
+    labels = {
+      "argocd.argoproj.io/secret-type" = "repo-creds"
+    }
+  }
+
+  data = {
+    type                    = "git"
+    url                     = var.github_app_url
+    githubAppID             = base64encode(var.github_app_id)
+    githubAppInstallationID = base64encode(var.github_app_installation_id)
+    githubAppPrivateKey     = base64encode(var.github_app_private_key)
   }
 }
-

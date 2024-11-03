@@ -104,14 +104,46 @@ variable "eks_enable_fargate" {
   default     = true
 }
 
+# ArgoCD Admin User from GitHub
+variable "argocd_admin_user" {
+  description = "ArgoCD admin user"
+  type        = string
+  default     = "ajripa@uoc.edu"
+}
+
+# Specifies the GitHub App URL
+variable "github_app_url" {
+  description = "GitHub App URL"
+  type = string
+}
+
+# Specifies the GitHub App ID for authenticating with GitHub App
+variable "github_app_id" {
+  description = "GitHub App ID"
+  type = string
+}
+
 # Specifies the GitHub provider configuration for authenticating with GitHub using a GitHub App.
-variable "github_app_clientid" {
+variable "github_app_client_id" {
   description = "GitHub App client ID"
   type = string
 }
 
+# Specifies the GitHub App secret for authenticating with GitHub App
 variable "github_app_secret" {
   description = "GitHub App secret"
+  type = string
+}
+
+# Specifies the GitHub App installation ID for the GitHub App
+variable "github_app_installation_id" {
+  description = "GitHub App installation ID"
+  type = string
+}
+
+# Specifies the GitHub App private key for authenticating with GitHub App
+variable "github_app_private_key" {
+  description = "GitHub App private key"
   type = string
 }
 
