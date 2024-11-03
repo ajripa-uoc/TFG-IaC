@@ -115,6 +115,7 @@ variable "argocd_admin_user" {
 variable "github_app_url" {
   description = "GitHub App URL"
   type = string
+  default = "https://github.com/ajripa-uoc"
 }
 
 # Specifies the GitHub App ID for authenticating with GitHub App

@@ -29,7 +29,7 @@ jobs:
             terraform fmt
             terraform init --upgrade
             terraform plan -var="aws_admin_arn=${{ secrets.AWS_ADMIN_ARN }}" \
-              -var="github_app_clientid=${{ secrets.GITHUBAPP_CLIENTID }}" \
+              -var="github_app_client_id=${{ secrets.GITHUBAPP_CLIENT_ID }}" \
               -var="github_app_secret=${{ secrets.GITHUBAPP_SECRET }}" \
               -var="github_app_installation_id=${{ secrets.GITHUBAPP_INSTALLATION_ID }}" \
               -var="github_app_id=${{ secrets.GITHUBAPP_ID }}" \
