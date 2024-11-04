@@ -54,7 +54,6 @@ ingress:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     alb.ingress.kubernetes.io/backend-protocol: HTTP
     external-dns.alpha.kubernetes.io/hostname: demo-app.ajripa.click
-
   hosts:
     - host: demo-app.ajripa.click
       paths:
