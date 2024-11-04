@@ -31,4 +31,3 @@ configs:
     scopes: '[group, email]'
     policy.csv: |
       g, ${argocd_admin_user}, role:admin
-

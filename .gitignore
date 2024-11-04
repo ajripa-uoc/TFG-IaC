@@ -37,4 +37,4 @@ override.tf.json
 terraform.rc
 
 # Secrets in helpers folder
-helpers/argocd-initial-password.txt
+helpers/*

@@ -9,9 +9,9 @@
 # This IAM role allows the external-dns controller to assume the role and manage Route 53 DNS records.
 module "external_dns_role" {
   depends_on = [module.eks]
-  source    = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  source     = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
 
-  role_name = "eks-external-dns-role"
+  role_name                  = "eks-external-dns-role"
   attach_external_dns_policy = true
 
   oidc_providers = {
@@ -33,11 +33,11 @@ resource "helm_release" "external_dns" {
   version    = "8.3.12"
   timeout    = "1500"
   namespace  = "kube-system"
-  values  = [templatefile("templates/external-dns.yaml.tpl", {
-    provider        = "aws",
-    aws_zone_type   = "public",
-    domain_name     = var.domain_name,
-    txt_owner_id    = var.route53_zone_id
-    iam_role_arn    = module.external_dns_role.iam_role_arn
+  values = [templatefile("templates/external-dns.yaml.tpl", {
+    provider      = "aws",
+    aws_zone_type = "public",
+    domain_name   = var.domain_name,
+    txt_owner_id  = var.route53_zone_id
+    iam_role_arn  = module.external_dns_role.iam_role_arn
   })]
 }

@@ -6,8 +6,8 @@ module "acm" {
   source  = "terraform-aws-modules/acm/aws"
   version = "~> 4.0"
 
-  domain_name  = var.domain_name
-  zone_id      = var.route53_zone_id
+  domain_name = var.domain_name
+  zone_id     = var.route53_zone_id
 
   validation_method = "DNS"
 

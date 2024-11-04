@@ -111,41 +111,42 @@ variable "argocd_admin_user" {
   default     = "ajripa@uoc.edu"
 }
 
-# Specifies the GitHub App URL
-variable "github_app_url" {
-  description = "GitHub App URL"
-  type = string
-  default = "https://github.com/ajripa-uoc"
+# Specifies the GitHub repo URL
+variable "github_repo_url" {
+  description = "GitHub URL"
+  type        = string
+  default     = "https://github.com/ajripa-uoc/tfg-iac.git"
 }
 
 # Specifies the GitHub App ID for authenticating with GitHub App
 variable "github_app_id" {
   description = "GitHub App ID"
-  type = string
+  type        = string
 }
 
 # Specifies the GitHub provider configuration for authenticating with GitHub using a GitHub App.
 variable "github_app_client_id" {
   description = "GitHub App client ID"
-  type = string
+  type        = string
 }
 
 # Specifies the GitHub App secret for authenticating with GitHub App
 variable "github_app_secret" {
   description = "GitHub App secret"
-  type = string
+  type        = string
 }
 
 # Specifies the GitHub App installation ID for the GitHub App
 variable "github_app_installation_id" {
   description = "GitHub App installation ID"
-  type = string
+  type        = string
 }
 
-# Specifies the GitHub App private key for authenticating with GitHub App
-variable "github_app_private_key" {
-  description = "GitHub App private key"
-  type = string
+# Specifies the GitHub App private key path for authenticating with GitHub App
+variable "github_app_private_key_path" {
+  description = "Path to the GitHub App private key PEM file"
+  type        = string
+  default     = "./helpers/tfg-argocd-github-app.2024-11-03.private-key.pem"
 }
 
 # Specifies the Route 53 Zone ID for the DNS zone in which records will be managed.
