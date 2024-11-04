@@ -53,10 +53,10 @@ ingress:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
     alb.ingress.kubernetes.io/backend-protocol: HTTP
-    external-dns.alpha.kubernetes.io/hostname: demno-app.ajripa.click
+    external-dns.alpha.kubernetes.io/hostname: demo-app.ajripa.click
 
   hosts:
-    - host: demno-app.ajripa.click
+    - host: demo-app.ajripa.click
       paths:
         - path: /
           pathType: ImplementationSpecific
