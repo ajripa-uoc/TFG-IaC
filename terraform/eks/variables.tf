@@ -157,4 +157,3 @@ variable "route53_zone_id" {
   type        = string
   default     = "Z05771062CFVMZEORD9FE"
 }
-

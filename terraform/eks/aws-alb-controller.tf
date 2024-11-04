@@ -8,7 +8,7 @@
 # This IAM role allows the AWS ALB controller to assume the role and manage Application Load Balancers.
 # Reference: https://registry.terraform.io/modules/terraform-aws-modules/iam/aws/latest/submodules/iam-role-for-service-accounts-eks
 module "aws_alb_controller_role" {
-  depends_on = [module.eks]
+  depends_on = [time_sleep.dns_cleanup]
   source     = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
 
   role_name                              = "eks-aws-alb-controller-role"

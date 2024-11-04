@@ -13,3 +13,7 @@ applications:
     destination:
       namespace: root-app
       name: in-cluster
+    syncPolicy:
+      automated:
+        selfHeal: true
+        prune: true

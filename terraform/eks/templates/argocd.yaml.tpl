@@ -3,6 +3,7 @@ global:
 server:
   ingress:
     enabled: true
+    ingressClassName: alb
     annotations:
       kubernetes.io/ingress.class: alb
       alb.ingress.kubernetes.io/group.name: shared-public
@@ -26,7 +27,7 @@ configs:
           config:
             clientID: ${github_app_client_id}
             clientSecret: ${github_app_client_secret}
-    admin.enabled: false # Disable admin user. We are login with GitHub.
+    admin.enabled: false # Disable admin user. We use Github credentials.
   rbac:
     scopes: '[group, email]'
     policy.csv: |

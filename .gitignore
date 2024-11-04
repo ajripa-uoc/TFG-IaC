@@ -37,7 +37,7 @@ override.tf.json
 terraform.rc
 
 # Secrets in helpers folder
-**/helpers/*
+**/keys/*
 
 # MacOS files
 .DS_Store

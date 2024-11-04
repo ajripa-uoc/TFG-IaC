@@ -37,7 +37,14 @@ resource "helm_release" "external_dns" {
     provider      = "aws",
     aws_zone_type = "public",
     domain_name   = var.domain_name,
-    txt_owner_id  = var.route53_zone_id
+    txt_owner_id  = module.eks.cluster_name
     iam_role_arn  = module.external_dns_role.iam_role_arn
   })]
+}
+
+# Create a null resource ensure that external-dns cleans up DNS records when destroyed
+resource "time_sleep" "dns_cleanup" {
+  depends_on = [helm_release.external_dns]
+
+  destroy_duration = "60s"
 }

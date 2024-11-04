@@ -7,10 +7,7 @@
 
 # Deploy the ArgoCD Helm chart with the specified values
 resource "helm_release" "argocd" {
-  depends_on = [
-    helm_release.aws_alb_controller,
-    helm_release.external_dns
-  ]
+  depends_on = [helm_release.aws_alb_controller]
   name             = "argocd"
   chart            = "argo-cd"
   repository       = "https://argoproj.github.io/argo-helm"
