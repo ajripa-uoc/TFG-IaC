@@ -25,7 +25,7 @@ Provides a foundational setup for managing Terraform state and locking resources
 1. Clone the repository:
     ```sh
     git clone https://github.com/yourusername/TFG-IaC.git
-    cd TFG-IaC/bootstrap
+    cd TFG-IaC/terraform/bootstrap
     ```
 
 2. Initialize Terraform:
@@ -42,7 +42,7 @@ Provides a foundational setup for managing Terraform state and locking resources
     aws_region          = "eu-west-1"
     tags = {
         CreatedBy  = "Terraform"
-        Owner      = "ajripa@ie.edu"
+        Owner      = "ajripa@uoc.edu"
         Project    = "TFG"
     }
     ```
