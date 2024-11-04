@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-app
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/ajripa-uoc/tfg-iac.git
+    path: charts/demo-app
+    targetRevision: HEAD
+  destination:
+    server: in-cluster
+    namespace: fargate-demo-app
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
