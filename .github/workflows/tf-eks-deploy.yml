@@ -58,3 +58,30 @@ jobs:
 
         - name: Terraform Apply
           run: terraform apply -auto-approve -input=false
+
+    verify:
+      name: Verify apps deployment
+      runs-on: ubuntu-20.04
+      needs: terraform
+
+      steps:
+        - name: Test URLs
+          env:
+            APP_URL_1: "https://argocd.ajripa.click"
+            APP_URL_2: "https://demo-app.ajripa.click"
+          run: |
+            # Function to test a URL and ensure it returns a 200 status
+            check_url() {
+              URL=$1
+              RESPONSE=$(curl --write-out "%{http_code}" --silent --output /dev/null "$URL")
+              if [ "$RESPONSE" -ne 200 ]; then
+                echo "❌ Failed: $URL returned $RESPONSE"
+                exit 1
+              else
+                echo "✅ Success: $URL returned $RESPONSE"
+              fi
+            }
+
+            # Test each URL
+            check_url "$APP_URL_1"
+            check_url "$APP_URL_2"
