@@ -136,19 +136,6 @@ variable "github_app_secret" {
   type        = string
 }
 
-# Specifies the GitHub App installation ID for the GitHub App
-variable "github_app_installation_id" {
-  description = "GitHub App installation ID"
-  type        = string
-}
-
-# Specifies the GitHub App private key path for authenticating with GitHub App
-variable "github_app_private_key_path" {
-  description = "Path to the GitHub App private key PEM file"
-  type        = string
-  default     = "./helpers/tfg-argocd-github-app.2024-11-03.private-key.pem"
-}
-
 # Specifies the Route 53 Zone ID for the DNS zone in which records will be managed.
 # This ID uniquely identifies the hosted zone in AWS Route 53 where domain records
 # (such as A, CNAME, and TXT records) will be created and updated by the external-dns controller.
