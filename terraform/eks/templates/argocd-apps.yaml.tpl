@@ -1,7 +1,7 @@
 
 applications:
   root-apps:
-    name: root-app
+    name: app-of-apps
     namespace: argocd
     finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -11,7 +11,7 @@ applications:
       path: argocd-apps
       targetRevision: HEAD
     destination:
-      namespace: root-app
+      namespace: argocd
       name: in-cluster
     syncPolicy:
       automated:
