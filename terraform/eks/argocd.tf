@@ -7,7 +7,7 @@
 
 # Deploy the ArgoCD Helm chart with the specified values
 resource "helm_release" "argocd" {
-  depends_on = [helm_release.aws_alb_controller]
+  depends_on       = [helm_release.aws_alb_controller]
   name             = "argocd"
   chart            = "argo-cd"
   repository       = "https://argoproj.github.io/argo-helm"
@@ -17,9 +17,9 @@ resource "helm_release" "argocd" {
   namespace        = "argocd"
 
   values = [templatefile("templates/argocd.yaml.tpl", {
-    argocd_admin_user          = var.argocd_admin_user,
-    github_app_client_id       = var.github_app_client_id,
-    github_app_client_secret   = var.github_app_secret,
-    domain_name                = "argocd.${var.domain_name}"
+    argocd_admin_user        = var.argocd_admin_user,
+    github_app_client_id     = var.github_app_client_id,
+    github_app_client_secret = var.github_app_secret,
+    domain_name              = "argocd.${var.domain_name}"
   })]
 }
