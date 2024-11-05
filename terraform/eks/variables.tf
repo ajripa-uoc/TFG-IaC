@@ -118,12 +118,6 @@ variable "github_repo_url" {
   default     = "https://github.com/ajripa-uoc/tfg-iac.git"
 }
 
-# Specifies the GitHub App ID for authenticating with GitHub App
-variable "github_app_id" {
-  description = "GitHub App ID"
-  type        = string
-}
-
 # Specifies the GitHub provider configuration for authenticating with GitHub using a GitHub App.
 variable "github_app_client_id" {
   description = "GitHub App client ID"
