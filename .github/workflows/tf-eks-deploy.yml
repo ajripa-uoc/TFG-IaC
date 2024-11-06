@@ -52,7 +52,7 @@ jobs:
           id: validate
           run: terraform validate
 
-        - name: Terraform plan
+        - name: Terraform Plan
           id: plan
           run: terraform plan
 
