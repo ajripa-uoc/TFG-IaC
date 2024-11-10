@@ -30,13 +30,13 @@ spec:
             - host: ganache.ajripa.click
               http:
                 paths:
-                - path: /
-                  pathType: Prefix
-                  backend:
-                    service:
-                      name: ganache
-                      port:
-                        number: 8545
+                  - path: /
+                    pathType: Prefix
+                    backend:
+                      service:
+                        name: ganache
+                        port:
+                          number: 8545
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: ganache
