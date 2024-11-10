@@ -13,7 +13,7 @@ spec:
     chart: ganache
     helm:
       releaseName: ganache
-      valuesObject:
+      values: |
         ingress:
           enabled: true
           ingressClassName: alb
