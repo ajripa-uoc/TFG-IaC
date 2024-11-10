@@ -16,7 +16,7 @@ server:
     hosts:
       - host: ${domain_name}
         paths:
-          - /
+        - /
 configs:
   cm:
     dex.config: |
