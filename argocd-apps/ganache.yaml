@@ -22,7 +22,7 @@ spec:
             alb.ingress.kubernetes.io/group.name: shared-public
             alb.ingress.kubernetes.io/scheme: internet-facing
             alb.ingress.kubernetes.io/target-type: ip
-            alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+            alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
             alb.ingress.kubernetes.io/backend-protocol: HTTP
             alb.ingress.kubernetes.io/healthcheck-port: '8545'
             alb.ingress.kubernetes.io/success-codes: '400'
