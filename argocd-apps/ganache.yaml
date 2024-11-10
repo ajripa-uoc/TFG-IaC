@@ -15,7 +15,7 @@ spec:
       releaseName: ganache
       values: |
         ingress:
-          enabled: false
+          enabled: true
           ingressClassName: alb
           annotations:
             kubernetes.io/ingress.class: alb
