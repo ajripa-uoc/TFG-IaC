@@ -31,6 +31,11 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
+                  backend:
+                    service:
+                      name: ganache
+                      port:
+                        number: 8545
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: ganache
