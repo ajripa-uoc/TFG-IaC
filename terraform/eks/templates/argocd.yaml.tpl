@@ -15,8 +15,8 @@ server:
       alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
     hosts:
       - host: ${domain_name}
-    paths:
-      - /
+        paths:
+          - /
 configs:
   cm:
     dex.config: |
