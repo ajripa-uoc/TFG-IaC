@@ -29,7 +29,7 @@ spec:
           hosts:
             - host: ganache.ajripa.click
               paths:
-                path: /
+                - path: /
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: ganache
