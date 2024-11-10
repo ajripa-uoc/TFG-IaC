@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ganache
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://ethpandaops.github.io/ethereum-helm-charts'
+    targetRevision: 0.1.2
+    chart: ganache
+    helm:
+      releaseName: ganache
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: ganache
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
