@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: 'https://github.com/ajripa-uoc/TFG-truffle-pet-shop'
     targetRevision: main
-    chart: chart/tfg-truffle-pet-shop
+    path: chart/tfg-truffle-pet-shop
     helm:
       valueFiles:
         - values-tfg.yaml
