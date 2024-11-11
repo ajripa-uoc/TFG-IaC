@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/ajripa-uoc/TFG-truffle-pet-shop'
-    targetRevision: HEAD
+    targetRevision: 0.1.0
     chart: chart/tfg-truffle-pet-shop
     helm:
       valueFiles:
