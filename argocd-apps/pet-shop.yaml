@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pet-shop
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/ajripa-uoc/TFG-truffle-pet-shop'
+    targetRevision: HEAD
+    chart: chart/tfg-truffle-pet-shop
+    helm:
+      valueFiles:
+        - values-tfg.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: pet-shop
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
