@@ -29,8 +29,7 @@ resource "helm_release" "argocd" {
 resource "null_resource" "argocd_token" {
   depends_on = [
     helm_release.argocd,
-    aws_secretsmanager_secret_version.argocd_token,
-    aws_secretsmanager_secret_version.argocd_hostname
+    aws_secretsmanager_secret_version.argocd
     ]
 
   provisioner "local-exec" {
@@ -53,47 +52,24 @@ resource "null_resource" "argocd_token" {
       # Generate token for Gitops user
       TOKEN=$(argocd account generate-token --account gitops --grpc-web)
 
-      # Update the AWS Secret
+      # Update token in AWS Secret
       aws secretsmanager update-secret \
-        --secret-id ${aws_secretsmanager_secret.argocd_token.id} \
-        --secret-string "$TOKEN" \
-        --region ${var.aws_region}
-
-      # Update hostname in AWS Secret
-      aws secretsmanager update-secret \
-        --secret-id ${aws_secretsmanager_secret.argocd_hostname.id} \
-        --secret-string "$ARGOCD_HOSTNAME" \
-        --region ${var.aws_region}
+      --secret-id ${aws_secretsmanager_secret.argocd.id} \
+      --secret-string "$(jq -n --arg token "$TOKEN" --arg hostname "$ARGOCD_HOSTNAME" \
+                    '{token: $token, hostname: $hostname}')" \
+      --region ${var.aws_region}
     EOT
   }
 }
 
 # Create AWS Secret for the token
-resource "aws_secretsmanager_secret" "argocd_token" {
-  name = "argocd/gitops-token"
+resource "aws_secretsmanager_secret" "argocd" {
+  name = "argocd/credentials"
+  tags = var.tags
 }
 
-# Store the token in AWS Secrets Manager
-resource "aws_secretsmanager_secret_version" "argocd_token" {
-  secret_id     = aws_secretsmanager_secret.argocd_token.id
-  secret_string = <<EOT
-    {
-      "": ""
-    }
-    EOT
-}
-
-# Create AWS Secret for the hostname
-resource "aws_secretsmanager_secret" "argocd_hostname" {
-  name = "argocd/hostname"
-}
-
-# Store the token in AWS Secrets Manager
-resource "aws_secretsmanager_secret_version" "argocd_hostname" {
-  secret_id     = aws_secretsmanager_secret.argocd_hostname.id
-  secret_string = <<EOT
-    {
-      "": ""
-    }
-    EOT
+# Store initial empty values
+resource "aws_secretsmanager_secret_version" "argocd" {
+  secret_id     = aws_secretsmanager_secret.argocd.id
+  secret_string = jsonencode(var.argocd_secret)
 }

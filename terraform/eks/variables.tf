@@ -138,3 +138,12 @@ variable "route53_zone_id" {
   type        = string
   default     = "Z05771062CFVMZEORD9FE"
 }
+
+# Initial empty values for ArgoCD secret
+variable "argocd_secret" {
+  default = {
+    token    = ""
+    hostname = ""
+  }
+  type = map(string)
+}

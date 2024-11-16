@@ -33,5 +33,6 @@ configs:
     scopes: '[group, email]'
     policy.csv: |
       p, role:devops, applications, *, */*, allow
+      p, role:devops, projects, *, *, allow
       g, gitops, role:devops
       g, ${argocd_admin_user}, role:admin
