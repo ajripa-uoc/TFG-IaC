@@ -16,7 +16,8 @@
         "kms:*",
         "acm:*",
         "route53:*",
-        "ecr:*"
+        "ecr:*",
+        "secretsmanager:+"
       ],
       "Resource": "*"
     }

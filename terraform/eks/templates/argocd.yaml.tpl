@@ -27,8 +27,11 @@ configs:
           config:
             clientID: ${github_app_client_id}
             clientSecret: ${github_app_client_secret}
-    admin.enabled: false # Disable admin user. We use Github credentials.
+    #admin.enabled: false # Disable admin user. We use Github credentials.
+    accounts.gitops: apiKey # api key to be used in pipelines
   rbac:
     scopes: '[group, email]'
     policy.csv: |
+      p, role:devops, applications, *, */*, allow
+      g, gitops, role:devops
       g, ${argocd_admin_user}, role:admin
