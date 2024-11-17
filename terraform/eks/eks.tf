@@ -16,10 +16,11 @@ module "eks" {
 
   # EKS Addons for essential networking and DNS functionality
   cluster_addons = {
-    coredns                = {} # CoreDNS for DNS management within the cluster
-    eks-pod-identity-agent = {} # Pod Identity Agent for IAM role management
-    kube-proxy             = {} # Kube-Proxy for networking
-    vpc-cni                = {} # VPC CNI for VPC-native networking
+    coredns                = { most_recent = true } # CoreDNS for DNS management within the cluster
+    eks-pod-identity-agent = { most_recent = true } # Pod Identity Agent for IAM role management
+    kube-proxy             = { most_recent = true } # Kube-Proxy for networking
+    vpc-cni                = { most_recent = true } # VPC CNI for VPC-native networking
+    aws-ebs-csi-driver     = { most_recent = true } # EBS CSI Driver for EBS volume management
   }
 
   ## VPC configuration from VPC module
@@ -29,6 +30,7 @@ module "eks" {
   # Define managed node groups for the EKS cluster based on variables
   eks_managed_node_group_defaults = {
     instance_types = var.eks_instance_type
+    iam_role_additional_policies = { AmazonEBSCSIDriverPolicy = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy" }
   }
 
   eks_managed_node_groups = merge(
@@ -83,4 +85,14 @@ module "eks" {
   }
 
   tags = var.tags # Tags to apply to all resources
+}
+
+# Update the kubeconfig file with the new EKS cluster
+# After your EKS cluster resource, add:
+resource "null_resource" "update_kubeconfig" {
+  depends_on = [module.eks.cluster_id]  # Or your cluster resource name
+
+  provisioner "local-exec" {
+    command = "aws eks update-kubeconfig --name ${module.eks.cluster_name} --region ${var.aws_region}"
+  }
 }

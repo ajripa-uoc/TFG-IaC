@@ -47,7 +47,7 @@ resource "null_resource" "argocd_token" {
       argocd login $ARGOCD_HOSTNAME \
         --username admin \
         --password $ARGOCD_PASSWORD \
-        --insecure
+        --grpc-web
 
       # Generate token for Gitops user
       TOKEN=$(argocd account generate-token --account gitops --grpc-web)
@@ -65,6 +65,8 @@ resource "null_resource" "argocd_token" {
 # Create AWS Secret for the token
 resource "aws_secretsmanager_secret" "argocd" {
   name = "argocd/credentials"
+  force_overwrite_replica_secret = true
+  recovery_window_in_days        = 0 // Disable recovery window so we can destroy and recreate the infrastructure every day
   tags = var.tags
 }
 
