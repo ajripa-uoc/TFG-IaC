@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/ajripa-uoc/TFG-DPP-POC'
+    repoURL: 'https://github.com/ajripa-uoc/TFG-DPP-PoC'
     targetRevision: main
     path: chart/tfg-dpp-poc
     helm:
