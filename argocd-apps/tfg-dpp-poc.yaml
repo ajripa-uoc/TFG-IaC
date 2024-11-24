@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tfg-dpp-poc
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/ajripa-uoc/TFG-DPP-POC'
+    targetRevision: main
+    path: chart/tfg-dpp-poc
+    helm:
+      valueFiles:
+        - values-tfg.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: tfg-dpp-poc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
