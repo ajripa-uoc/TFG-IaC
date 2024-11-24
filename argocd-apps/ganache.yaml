@@ -33,6 +33,10 @@ spec:
               paths:
                 - path: /
                   pathType: Prefix
+        secretEnv:
+          MNEMONIC: wagon stock blossom agree deep blue whale umbrella penalty grace silk abstract
+        extraArgs:
+          - --mnemonic="$(MNEMONIC)"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: ganache
