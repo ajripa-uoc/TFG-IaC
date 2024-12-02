@@ -43,6 +43,22 @@ resource "null_resource" "argocd_token" {
       # Get ArgoCD hostname
       ARGOCD_HOSTNAME=$(kubectl get ingress argocd-server -n argocd -o jsonpath='{.spec.rules[0].host}')
 
+      # Wait until ArgoCD hostname resolves
+      MAX_RETRIES=30 # Maximum number of attempts
+      RETRY_COUNT=0  # Initialize retry counter
+      RETRY_INTERVAL=5 # Seconds between retries
+
+      # Loop until the domain resolves or the maximum retries are reached
+      while ! dig +short "$ARGOCD_HOSTNAME" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' > /dev/null; do
+        if [ "$RETRY_COUNT" -ge "$MAX_RETRIES" ]; then
+          echo "Maximum retries reached. Domain $ARGOCD_HOSTNAME did not resolve."
+          exit 1
+        fi
+        echo "Domain $ARGOCD_HOSTNAME is not yet resolving. Retrying in $RETRY_INTERVAL seconds... (Attempt $((RETRY_COUNT + 1))/$MAX_RETRIES)"
+        RETRY_COUNT=$((RETRY_COUNT + 1))
+        sleep "$RETRY_INTERVAL"
+      done
+
       # Login to ArgoCD
       argocd login $ARGOCD_HOSTNAME \
         --username admin \
