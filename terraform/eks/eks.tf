@@ -21,6 +21,7 @@ module "eks" {
     kube-proxy             = { most_recent = true } # Kube-Proxy for networking
     vpc-cni                = { most_recent = true } # VPC CNI for VPC-native networking
     aws-ebs-csi-driver     = { most_recent = true } # EBS CSI Driver for EBS volume management
+    aws-efs-csi-driver     = { most_recent = true } # EFS CSI Driver for EFS volume management
   }
 
   ## VPC configuration from VPC module
@@ -30,7 +31,11 @@ module "eks" {
   # Define managed node groups for the EKS cluster based on variables
   eks_managed_node_group_defaults = {
     instance_types = var.eks_instance_type
-    iam_role_additional_policies = { AmazonEBSCSIDriverPolicy = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy" }
+    # IAM instance profile for the managed node group for volume management
+    iam_role_additional_policies = {
+      AmazonEBSCSIDriverPolicy = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+      AmazonEFSCSIDriverPolicy = "arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"
+      }
   }
 
   eks_managed_node_groups = merge(

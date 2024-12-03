@@ -147,3 +147,11 @@ variable "argocd_secret" {
   }
   type = map(string)
 }
+
+# EFS Name
+# EFS is used by EKS for persistent storage
+variable "efs_name" {
+  description = "Name of the EFS"
+  type        = string
+  default     = "tfg-efs"
+}

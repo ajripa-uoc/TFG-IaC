@@ -17,7 +17,8 @@
         "acm:*",
         "route53:*",
         "ecr:*",
-        "secretsmanager:+"
+        "secretsmanager:*",
+        "elasticfilesystem:*"
       ],
       "Resource": "*"
     }
