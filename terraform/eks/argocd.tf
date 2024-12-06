@@ -46,7 +46,7 @@ resource "null_resource" "argocd_token" {
       # Wait until ArgoCD hostname resolves
       MAX_RETRIES=30 # Maximum number of attempts
       RETRY_COUNT=0  # Initialize retry counter
-      RETRY_INTERVAL=5 # Seconds between retries
+      RETRY_INTERVAL=10 # Seconds between retries
 
       # Loop until the domain resolves or the maximum retries are reached
       while ! dig +short "$ARGOCD_HOSTNAME" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' > /dev/null; do
