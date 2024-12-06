@@ -2,7 +2,8 @@
 # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/latest
 
 module "eks" {
-  depends_on = [module.vpc]
+  depends_on = [
+    module.vpc,resource.aws_efs_file_system.efs]
   source     = "terraform-aws-modules/eks/aws"
   version    = "~> 20.0"
 
