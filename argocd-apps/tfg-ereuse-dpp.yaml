@@ -13,7 +13,7 @@ spec:
     path: chart/tfg-ereuse-dpp
     helm:
       valueFiles:
-        - values.yaml
+        - values-tfg.yaml
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: tfg-ereuse-dpp
