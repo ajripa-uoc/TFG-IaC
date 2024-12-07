@@ -97,7 +97,7 @@ variable "eks_enable_spot" {
 
 # Specifies whether to enable Fargate profile for the EKS cluster.
 # By default, this is set to true, but it can be disabled if not needed.
-# Only kube-system and default namespaces are included in the Fargate profile.
+# Only namespaces starting with "fargate" will be scheduled on Fargate.
 variable "eks_enable_fargate" {
   description = "Enable Fargate profile"
   type        = bool
@@ -143,7 +143,8 @@ variable "route53_zone_id" {
 variable "argocd_secret" {
   default = {
     token    = ""
-    hostname = ""
+    hostname        = ""
+    admin_password  = ""
   }
   type = map(string)
 }

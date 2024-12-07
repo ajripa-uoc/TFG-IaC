@@ -71,18 +71,21 @@ resource "null_resource" "argocd_token" {
       # Update token in AWS Secret
       aws secretsmanager update-secret \
       --secret-id ${aws_secretsmanager_secret.argocd.id} \
-      --secret-string "$(jq -n --arg token "$TOKEN" --arg hostname "$ARGOCD_HOSTNAME" \
-                    '{token: $token, hostname: $hostname}')" \
+      --secret-string "$(jq -n \
+                    --arg token "$TOKEN" \
+                    --arg hostname "$ARGOCD_HOSTNAME" \
+                    --arg admin_password "$ARGOCD_PASSWORD" \
+                    '{token: $token, hostname: $hostname, admin_password: $admin_password}')" \
       --region ${var.aws_region}
     EOT
   }
 }
 
-# Create AWS Secret for the token
+# Create AWS Secret for the token and admin password
 resource "aws_secretsmanager_secret" "argocd" {
   name = "argocd/credentials"
   force_overwrite_replica_secret = true
-  recovery_window_in_days        = 0 // Disable recovery window so we can destroy and recreate the infrastructure every day
+  recovery_window_in_days        = 0
   tags = var.tags
 }
 
