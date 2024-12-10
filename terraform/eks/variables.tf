@@ -101,7 +101,7 @@ variable "eks_enable_spot" {
 variable "eks_enable_fargate" {
   description = "Enable Fargate profile"
   type        = bool
-  default     = true
+  default     = false
 }
 
 # ArgoCD Admin User from GitHub

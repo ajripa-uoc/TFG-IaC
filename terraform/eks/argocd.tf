@@ -7,7 +7,7 @@
 
 # Deploy the ArgoCD Helm chart with the specified values
 resource "helm_release" "argocd" {
-  depends_on       = [helm_release.aws_alb_controller]
+  depends_on       = [helm_release.aws_alb_controller,kubernetes_storage_class.efs]
   name             = "argocd"
   chart            = "argo-cd"
   repository       = "https://argoproj.github.io/argo-helm"
