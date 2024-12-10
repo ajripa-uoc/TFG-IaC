@@ -49,7 +49,8 @@ resource "null_resource" "argocd_token" {
       RETRY_INTERVAL=10 # Seconds between retries
 
       # Loop until the domain resolves or the maximum retries are reached
-      while ! dig +short "$ARGOCD_HOSTNAME" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' > /dev/null; do
+      # Uses google's public DNS server to check if the domain resolves
+      while ! dig +short @8.8.8.8 "$ARGOCD_HOSTNAME" | grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' > /dev/null; do
         if [ "$RETRY_COUNT" -ge "$MAX_RETRIES" ]; then
           echo "Maximum retries reached. Domain $ARGOCD_HOSTNAME did not resolve."
           exit 1
@@ -66,6 +67,7 @@ resource "null_resource" "argocd_token" {
         --grpc-web
 
       # Generate token for Gitops user
+      # This token will be used by the GitHub Actions workflow
       TOKEN=$(argocd account generate-token --account gitops --grpc-web)
 
       # Update token in AWS Secret
