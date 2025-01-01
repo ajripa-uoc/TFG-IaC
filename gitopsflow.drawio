@@ -140,8 +140,8 @@
             <mxPoint x="450" y="564" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="qPDrxui3yycS4Ta56Oi9-41" value="Update" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
-          <mxGeometry x="360" y="536" width="60" height="30" as="geometry" />
+        <mxCell id="qPDrxui3yycS4Ta56Oi9-41" value="Update infra" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="345" y="536" width="90" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
