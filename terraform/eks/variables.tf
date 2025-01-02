@@ -142,9 +142,9 @@ variable "route53_zone_id" {
 # Initial empty values for ArgoCD secret
 variable "argocd_secret" {
   default = {
-    token    = ""
-    hostname        = ""
-    admin_password  = ""
+    token          = ""
+    hostname       = ""
+    admin_password = ""
   }
   type = map(string)
 }

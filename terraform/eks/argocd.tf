@@ -7,7 +7,7 @@
 
 # Deploy the ArgoCD Helm chart with the specified values
 resource "helm_release" "argocd" {
-  depends_on       = [helm_release.aws_alb_controller,kubernetes_storage_class.efs]
+  depends_on       = [helm_release.aws_alb_controller, kubernetes_storage_class.efs]
   name             = "argocd"
   chart            = "argo-cd"
   repository       = "https://argoproj.github.io/argo-helm"
@@ -30,7 +30,7 @@ resource "null_resource" "argocd_token" {
   depends_on = [
     helm_release.argocd,
     aws_secretsmanager_secret_version.argocd
-    ]
+  ]
 
   provisioner "local-exec" {
     command = <<-EOT
@@ -85,10 +85,10 @@ resource "null_resource" "argocd_token" {
 
 # Create AWS Secret for the token and admin password
 resource "aws_secretsmanager_secret" "argocd" {
-  name = "argocd/credentials"
+  name                           = "argocd/credentials"
   force_overwrite_replica_secret = true
   recovery_window_in_days        = 0
-  tags = var.tags
+  tags                           = var.tags
 }
 
 # Store initial empty values

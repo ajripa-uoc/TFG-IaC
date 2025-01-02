@@ -3,9 +3,9 @@
 
 module "eks" {
   depends_on = [
-    module.vpc,resource.aws_efs_file_system.efs]
-  source     = "terraform-aws-modules/eks/aws"
-  version    = "~> 20.0"
+  module.vpc, resource.aws_efs_file_system.efs]
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 20.0"
 
   cluster_name    = var.eks_cluster_name
   cluster_version = var.eks_cluster_version
@@ -36,7 +36,7 @@ module "eks" {
     iam_role_additional_policies = {
       AmazonEBSCSIDriverPolicy = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
       AmazonEFSCSIDriverPolicy = "arn:aws:iam::aws:policy/service-role/AmazonEFSCSIDriverPolicy"
-      }
+    }
   }
 
   eks_managed_node_groups = merge(
@@ -96,7 +96,7 @@ module "eks" {
 # Update the kubeconfig file with the new EKS cluster
 # After your EKS cluster resource, add:
 resource "null_resource" "update_kubeconfig" {
-  depends_on = [module.eks.cluster_id]  # Or your cluster resource name
+  depends_on = [module.eks.cluster_id] # Or your cluster resource name
 
   provisioner "local-exec" {
     command = "aws eks update-kubeconfig --name ${module.eks.cluster_name} --region ${var.aws_region}"

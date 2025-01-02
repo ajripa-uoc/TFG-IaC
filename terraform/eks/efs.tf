@@ -20,10 +20,10 @@ resource "aws_security_group" "efs" {
   vpc_id      = module.vpc.vpc_id
 
   ingress {
-    description      = "nfs"
-    from_port        = 2049
-    to_port          = 2049
-    protocol         = "TCP"
+    description     = "nfs"
+    from_port       = 2049
+    to_port         = 2049
+    protocol        = "TCP"
     security_groups = [module.eks.cluster_primary_security_group_id]
   }
 
@@ -43,7 +43,7 @@ resource "aws_efs_file_system" "efs" {
   tags = merge(
     var.tags,
     {
-        Name = var.efs_name
+      Name = var.efs_name
     }
   )
 }
@@ -53,26 +53,26 @@ resource "aws_efs_file_system" "efs" {
 resource "aws_efs_mount_target" "mount" {
   for_each = local.private_subnets_map
 
-  subnet_id = each.value
-  file_system_id = aws_efs_file_system.efs.id
+  subnet_id       = each.value
+  file_system_id  = aws_efs_file_system.efs.id
   security_groups = [aws_security_group.efs.id]
 }
 
 # Create a Kubernetes storage class for EFS
 resource "kubernetes_storage_class" "efs" {
-  depends_on = [ module.eks ]
+  depends_on = [module.eks]
   metadata {
     name = "efs"
   }
 
-  storage_provisioner = "efs.csi.aws.com"
-  reclaim_policy      = "Retain"
+  storage_provisioner    = "efs.csi.aws.com"
+  reclaim_policy         = "Retain"
   allow_volume_expansion = true
   parameters = {
     provisioningMode = "efs-ap"
-    fileSystemId = aws_efs_file_system.efs.id
-    directoryPerms = "777"
-    gid = "1000"
-    uid = "1000"
+    fileSystemId     = aws_efs_file_system.efs.id
+    directoryPerms   = "777"
+    gid              = "1000"
+    uid              = "1000"
   }
 }
